@@ -1,0 +1,1085 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Analyzer</title>
+   
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      
+body{
+    background: linear-gradient(135deg,#08131f,#0d1b2a,#13293d);
+    min-height:100vh;
+    color:white;
+    overflow-x:hidden;
+    font-family:'Segoe UI',sans-serif;
+}
+
+/* Background Glow */
+
+body::before{
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    background:#00bfff;
+    filter:blur(180px);
+    top:-150px;
+    left:-150px;
+    opacity:.18;
+    z-index:-1;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:450px;
+    height:450px;
+    background:#00ff95;
+    filter:blur(170px);
+    bottom:-150px;
+    right:-150px;
+    opacity:.15;
+    z-index:-1;
+}
+      .navbar{
+        padding: 15px 30px;
+        background: linear-gradient(
+          135deg,
+          #0f172a,
+          #1e293b
+
+        )!important;
+      }
+      .hero{
+    padding:90px 0;
+}
+
+.hero-title{
+    font-size:65px;
+    font-weight:700;
+    color:#fff;
+}
+#typing{
+  color: white;
+  border-right: 4px solid #00c6ff;
+  padding-right: 5px;
+  white-space: nowrap;
+}
+
+.hero-text{
+    color:#cbd5e1;
+    font-size:21px;
+    line-height:1.8;
+}
+
+.glass-card{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.12);
+    backdrop-filter:blur(25px);
+    border-radius:25px;
+    padding:45px;
+    box-shadow:0 20px 45px rgba(0,0,0,.35);
+}
+
+.hero-image{
+    border-radius:20px;
+    width:100%;
+    box-shadow:0 15px 40px rgba(0,0,0,.45);
+}
+
+.feature-card{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.10);
+    backdrop-filter:blur(20px);
+    border-radius:20px;
+    padding:30px;
+    transition:.35s;
+    color:white;
+    height:100%;
+}
+
+.feature-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 15px 35px rgba(0,191,255,.25);
+}
+
+.feature-card p{
+    color:#cbd5e1;
+}
+.logo-slider{
+
+overflow:hidden;
+
+position:relative;
+
+padding:15px 0;
+
+}
+
+.logo-track{
+
+display:flex;
+
+width:max-content;
+
+animation:scrollLogo 25s linear infinite;
+
+}
+
+.logo-item{
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.15);
+
+border-radius:18px;
+
+padding:20px 35px;
+
+margin:0 15px;
+
+font-size:22px;
+
+font-weight:700;
+
+color:white;
+
+min-width:220px;
+
+text-align:center;
+
+transition:.3s;
+
+}
+
+.logo-item:hover{
+
+transform:translateY(-6px);
+
+background:rgba(0,191,255,.25);
+
+}
+
+@keyframes scrollLogo{
+
+0%{
+
+transform:translateX(0);
+
+}
+
+100%{
+
+transform:translateX(-50%);
+
+}
+
+}
+
+.btn-main{
+    background:#00bfff;
+    color:white;
+    padding:12px 35px;
+    border-radius:12px;
+    font-weight:600;
+    border:none;
+}
+
+.btn-main:hover{
+    background:#009ee0;
+    color:white;
+}
+
+.btn-outline-custom{
+    border:2px solid #00bfff;
+    color:#00bfff;
+    padding:12px 35px;
+    border-radius:12px;
+}
+
+.btn-outline-custom:hover{
+    background:#00bfff;
+    color:white;
+}
+
+.stats-card{
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:20px;
+    padding:35px;
+    color:white;
+}
+
+.stats-card h1{
+    color:#00d4ff;
+    font-weight:bold;
+}
+.accordion-item{
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,255,255,.12);
+
+backdrop-filter:blur(20px);
+
+}
+
+.accordion-button{
+
+background:transparent;
+
+color:white;
+
+font-weight:600;
+
+}
+
+.accordion-button:not(.collapsed){
+
+background:rgba(0,191,255,.18);
+
+color:white;
+
+}
+
+.accordion-button:focus{
+
+box-shadow:none;
+
+}
+
+.accordion-body{
+
+background:transparent;
+
+color:#cbd5e1;
+
+}
+
+.accordion-button::after{
+
+filter:brightness(0) invert(1);
+
+}
+
+footer{
+    /* background:rgba(255,255,255,.06)!important; */
+    backdrop-filter:blur(20px);
+}
+.footer-link{
+
+text-decoration:none;
+
+color:#6b7280;
+
+display:block;
+
+margin-bottom:10px;
+
+transition:.3s;
+
+font-weight:600;
+
+}
+
+.footer-link:hover{
+
+color:#2563eb;
+
+padding-left:8px;
+
+}
+
+.footer-text{
+
+color:#6b7280;
+
+margin-bottom:10px;
+
+}
+
+
+      
+
+    </style>
+
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold fs-4" href="#">
+      🚀 AI Resume Analyzer
+</a>
+  </div>
+</nav>
+<div class="container hero">
+
+<div class="glass-card">
+
+<div class="row align-items-center">
+
+<div class="col-lg-6">
+
+<h1 class="hero-title">
+<span id="typing"></span>
+</h1>
+
+<p class="hero-text mt-4">
+
+Build an ATS Friendly Resume.<br>
+
+Find AI Matched Jobs.<br>
+
+Analyze Resume Instantly.<br>
+
+Crack Interviews with AI Guidance.
+
+</p>
+
+<div class="mt-5">
+
+<a href="/signup/" class="btn btn-main btn-lg">
+Get Started
+</a>
+
+<a href="/login/" class="btn btn-outline-custom btn-lg ms-3">
+Login
+</a>
+
+</div>
+
+</div>
+
+<div class="col-lg-6 text-center">
+
+<img src="{% static 'job.jpg' %}"
+class="hero-image">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="container my-5">
+  <h2 class="text-center mb-5">Platform Featues</h2>
+  <div class="row g-4">
+    <div class="col-md-3">
+      <div class="feature-card">
+        <h4>Resume Analysis</h4>
+        <p>
+          AI analysis your resume 
+          and identifies missing.
+        </p>
+      </div>
+
+    </div>
+    <div class="col-md-3">
+      <div class="feature-card">
+        <h4>Job Matching</h4>
+        <p>
+          Find jobs Matching
+          your skills instantly.
+        </p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="feature-card">
+        <h4>
+          Recruiter Portal
+        </h4>
+        <p>
+          Recruiter can manage
+          jobs and applicants.
+        </p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="feature-card">
+        <h4>AI Hiring</h4>
+        <p>
+          Generate interview 
+          questions automatically.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container my-5">
+
+<h2 class="text-center mb-5 text-white fw-bold">
+
+🏢 Top Hiring Companies
+
+</h2>
+
+<div class="logo-slider">
+
+<div class="logo-track">
+
+<div class="logo-item">Google</div>
+
+<div class="logo-item">Microsoft</div>
+
+<div class="logo-item">Amazon</div>
+
+<div class="logo-item">TCS</div>
+
+<div class="logo-item">Infosys</div>
+
+<div class="logo-item">Capgemini</div>
+
+<div class="logo-item">Accenture</div>
+
+<div class="logo-item">Wipro</div>
+
+<div class="logo-item">Deloitte</div>
+
+<div class="logo-item">IBM</div>
+
+<!-- Repeat for smooth animation -->
+
+<div class="logo-item">Google</div>
+
+<div class="logo-item">Microsoft</div>
+
+<div class="logo-item">Amazon</div>
+
+<div class="logo-item">TCS</div>
+
+<div class="logo-item">Infosys</div>
+
+<div class="logo-item">Capgemini</div>
+
+<div class="logo-item">Accenture</div>
+
+<div class="logo-item">Wipro</div>
+
+<div class="logo-item">Deloitte</div>
+
+<div class="logo-item">IBM</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="container my-5">
+  <div class="row text-center g-4">
+    <div class="col-md-3">
+      <div class="stats-card">
+        <h1 id="resumeCount">500+</h1>
+        <h5>Resumes Analyzed</h5>
+
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="stats-card">
+        <h1 id="jobCount">200+</h1>
+        <h5>Job Posted</h5>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="stats-card">
+        <h1 id="recruiterCount">100+</h1>
+        <h5>Recruiters</h5>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="stats-card">
+        <h1 id="successRate">95%</h1>
+        <h5>Success Rate</h5>
+      </div>
+    </div>
+    <div class="container my-5">
+
+<h2 class="text-center text-white fw-bold mb-5">
+⚡ How It Works
+</h2>
+
+<div class="row g-4">
+
+<div class="col-md-3">
+
+<div class="feature-card text-center">
+
+<h1>📄</h1>
+
+<h4>Upload Resume</h4>
+
+<p>
+Upload your resume in PDF format.
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="feature-card text-center">
+
+<h1>🤖</h1>
+
+<h4>AI Analysis</h4>
+
+<p>
+AI analyzes your resume and suggests improvements.
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="feature-card text-center">
+
+<h1>🎯</h1>
+
+<h4>Match Jobs</h4>
+
+<p>
+Find jobs based on your skills and resume.
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="feature-card text-center">
+
+<h1>💼</h1>
+
+<h4>Get Hired</h4>
+
+<p>
+Apply for jobs and prepare with AI Mock Interviews.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="container my-5">
+
+<h2 class="text-center text-white fw-bold mb-5">
+
+⭐ Why Choose AI Resume Analyzer?
+
+</h2>
+
+<div class="row g-4">
+
+<div class="col-lg-4 col-md-6">
+
+<div class="feature-card text-center">
+
+<h1>🤖</h1>
+
+<h4>AI Powered Analysis</h4>
+
+<p>
+
+Get intelligent resume analysis with ATS score and personalized improvement suggestions.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-lg-4 col-md-6">
+
+<div class="feature-card text-center">
+
+<h1>🎯</h1>
+
+<h4>Smart Job Matching</h4>
+
+<p>
+
+Discover jobs that match your skills and increase your chances of getting hired.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-lg-4 col-md-6">
+
+<div class="feature-card text-center">
+
+<h1>🎤</h1>
+
+<h4>AI Mock Interview</h4>
+
+<p>
+
+Practice technical interviews with AI-generated questions and instant feedback.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-lg-4 col-md-6">
+
+<div class="feature-card text-center">
+
+<h1>📈</h1>
+
+<h4>Career Growth</h4>
+
+<p>
+
+Track your progress and continuously improve your professional profile.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-lg-4 col-md-6">
+
+<div class="feature-card text-center">
+
+<h1>⚡</h1>
+
+<h4>Fast & Secure</h4>
+
+<p>
+
+Your data remains secure while AI processes your resume in seconds.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-lg-4 col-md-6">
+
+<div class="feature-card text-center">
+
+<h1>💼</h1>
+
+<h4>Recruiter Connect</h4>
+
+<p>
+
+Apply directly to recruiter-posted jobs from one unified platform.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="container my-5">
+
+<h2 class="text-center text-white fw-bold mb-5">
+💬 Success Stories
+</h2>
+
+<div class="row g-4">
+
+<div class="col-lg-4">
+
+<div class="feature-card">
+
+<h4>⭐⭐⭐⭐⭐</h4>
+
+<p class="mt-3">
+
+"The AI Resume Analyzer improved my resume and helped me understand what recruiters expect."
+
+</p>
+
+<hr>
+
+<h5 class="mb-0">
+Rahul Sharma
+</h5>
+
+<small class="text-light">
+Python Developer
+</small>
+
+</div>
+
+</div>
+
+<div class="col-lg-4">
+
+<div class="feature-card">
+
+<h4>⭐⭐⭐⭐⭐</h4>
+
+<p class="mt-3">
+
+"The AI Mock Interview gave me confidence before my campus placement interviews."
+
+</p>
+
+<hr>
+
+<h5 class="mb-0">
+Priya Verma
+</h5>
+
+<small class="text-light">
+Software Engineer
+</small>
+
+</div>
+
+</div>
+
+<div class="col-lg-4">
+
+<div class="feature-card">
+
+<h4>⭐⭐⭐⭐⭐</h4>
+
+<p class="mt-3">
+
+"Job matching feature saved a lot of time by showing only relevant opportunities."
+
+</p>
+
+<hr>
+
+<h5 class="mb-0">
+Aman Patel
+</h5>
+
+<small class="text-light">
+Full Stack Developer
+</small>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="container my-5">
+
+<h2 class="text-center text-white fw-bold mb-5">
+❓ Frequently Asked Questions
+</h2>
+
+<div class="accordion" id="faqAccordion">
+
+<div class="accordion-item mb-3 rounded-4 overflow-hidden">
+
+<h2 class="accordion-header">
+
+<button class="accordion-button" type="button"
+data-bs-toggle="collapse"
+data-bs-target="#faq1">
+
+What is ATS Score?
+
+</button>
+
+</h2>
+
+<div id="faq1" class="accordion-collapse collapse show"
+data-bs-parent="#faqAccordion">
+
+<div class="accordion-body">
+
+ATS Score measures how well your resume is optimized for Applicant Tracking Systems used by recruiters.
+
+</div>
+
+</div>
+
+</div>
+
+<div class="accordion-item mb-3 rounded-4 overflow-hidden">
+
+<h2 class="accordion-header">
+
+<button class="accordion-button collapsed"
+type="button"
+data-bs-toggle="collapse"
+data-bs-target="#faq2">
+
+Is Resume Analysis Free?
+
+</button>
+
+</h2>
+
+<div id="faq2"
+class="accordion-collapse collapse"
+data-bs-parent="#faqAccordion">
+
+<div class="accordion-body">
+
+Yes. You can upload your resume and receive AI-powered feedback.
+
+</div>
+
+</div>
+
+</div>
+
+<div class="accordion-item mb-3 rounded-4 overflow-hidden">
+
+<h2 class="accordion-header">
+
+<button class="accordion-button collapsed"
+type="button"
+data-bs-toggle="collapse"
+data-bs-target="#faq3">
+
+How does Job Matching work?
+
+</button>
+
+</h2>
+
+<div id="faq3"
+class="accordion-collapse collapse"
+data-bs-parent="#faqAccordion">
+
+<div class="accordion-body">
+
+The system compares your resume skills with job requirements and calculates a matching percentage.
+
+</div>
+
+</div>
+
+</div>
+
+<div class="accordion-item rounded-4 overflow-hidden">
+
+<h2 class="accordion-header">
+
+<button class="accordion-button collapsed"
+type="button"
+data-bs-toggle="collapse"
+data-bs-target="#faq4">
+
+Is my resume secure?
+
+</button>
+
+</h2>
+
+<div id="faq4"
+class="accordion-collapse collapse"
+data-bs-parent="#faqAccordion">
+
+<div class="accordion-body">
+
+Yes. Your resume is stored securely and is only used for analysis and job applications.
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+  </div>
+</div>
+<footer class="mt-5">
+
+<div class="container">
+
+<div class="feature-card p-5">
+
+<div class="row">
+
+<div class="col-md-4">
+
+<h3 class="text-dark fw-bold">
+🚀 AI Resume Analyzer
+</h3>
+
+<p class="text-secondary mt-3">
+
+An AI-powered platform to analyze resumes, find matching jobs, prepare for interviews and connect candidates with recruiters.
+
+</p>
+
+</div>
+
+<div class="col-md-2">
+
+<h5 class="text-dark fw-bold">
+Quick Links
+</h5>
+
+<ul class="list-unstyled mt-3">
+
+<li><a href="/" class="footer-link">Home</a></li>
+
+<li><a href="/login/" class="footer-link">Login</a></li>
+
+<li><a href="/signup/" class="footer-link">Signup</a></li>
+
+</ul>
+
+</div>
+
+<div class="col-md-3">
+
+<h5 class="text-dark fw-bold">
+Features
+</h5>
+
+<ul class="list-unstyled mt-3">
+
+<li class="footer-text">AI Resume Analysis</li>
+
+<li class="footer-text">Job Matching</li>
+
+<li class="footer-text">Mock Interview</li>
+
+<li class="footer-text">Recruiter Portal</li>
+
+</ul>
+
+</div>
+
+<div class="col-md-3">
+
+<h5 class="text-dark fw-bold">
+Contact
+</h5>
+
+<p class="footer-text mt-3">
+
+📧 support@airesume.com
+
+</p>
+
+<p class="footer-text">
+
+📍 India
+
+</p>
+
+</div>
+
+</div>
+
+<hr>
+
+<div class="text-center">
+
+<p class="mb-0 text-secondary">
+
+© 2026 AI Resume Analyzer & Job Portal | All Rights Reserved
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</footer>
+<script>
+
+function animateValue(id, start, end, duration, suffix="") {
+
+    let obj = document.getElementById(id);
+
+    let range = end - start;
+
+    let current = start;
+
+    let increment = end > start ? 1 : -1;
+
+    let stepTime = Math.abs(Math.floor(duration / range));
+
+    let timer = setInterval(function () {
+
+        current += increment;
+
+        obj.innerHTML = current + suffix;
+
+        if (current == end) {
+            clearInterval(timer);
+        }
+
+    }, stepTime);
+
+}
+
+window.onload = function(){
+
+    animateValue("resumeCount",0,500,1500,"+");
+
+    animateValue("jobCount",0,200,1500,"+");
+
+    animateValue("recruiterCount",0,100,1500,"+");
+
+    animateValue("successRate",0,95,1500,"%");
+
+}
+
+</script>
+<script>
+
+const text = "AI Resume Analyzer";
+
+let i = 0;
+
+function typingEffect(){
+
+    if(i < text.length){
+
+        document.getElementById("typing").innerHTML += text.charAt(i);
+
+        i++;
+
+        setTimeout(typingEffect,70);
+
+    }
+
+}
+
+typingEffect();
+
+</script>
+
+
+
+</body>
+</html>

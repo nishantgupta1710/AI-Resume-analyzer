@@ -1,0 +1,106 @@
+{% extends "base_recruiter.html" %}
+
+{% block title %}
+Applications
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.glass-card{
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 15px 40px rgba(0,0,0,.35);
+}
+
+.table{
+    color:white;
+}
+
+.table thead{
+    color:#60a5fa;
+}
+
+.table tbody tr:hover{
+    background:rgba(255,255,255,.05);
+}
+
+</style>
+
+<div class="container mt-5">
+
+<div class="glass-card">
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+<h2 class="text-white">
+📄 Applications
+</h2>
+
+</div>
+
+<table class="table table-hover align-middle">
+
+<thead>
+
+<tr>
+
+<th>Candidate</th>
+
+<th>Job</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for app in applications %}
+
+<tr>
+
+<td>{{app.user.username}}</td>
+
+<td>{{app.job.title}}</td>
+
+<td>{{app.status}}</td>
+
+<td>
+
+<a href="{% url 'update_application_status' app.id 'Shortlisted' %}"
+class="btn btn-success btn-sm">
+
+Shortlist
+
+</a>
+
+<a href="{% url 'update_application_status' app.id 'Rejected' %}"
+class="btn btn-danger btn-sm">
+
+Reject
+
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+{% endblock %}

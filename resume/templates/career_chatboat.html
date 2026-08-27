@@ -1,0 +1,121 @@
+{% extends "base_candidate.html" %}
+
+{% block title %}
+Career Assistant
+{% endblock %}
+
+{% block career_active %}
+active
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.chat-card{
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:20px;
+    padding:35px;
+    color:white;
+    box-shadow:0 15px 40px rgba(0,0,0,.35);
+}
+
+.info-card{
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:20px;
+    padding:25px;
+    color:white;
+    margin-bottom:30px;
+}
+
+.form-control{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.15);
+    color:white;
+}
+
+.form-control::placeholder{
+    color:#d1d5db;
+}
+
+.form-control:focus{
+    background:rgba(255,255,255,.12);
+    color:white;
+    border-color:#3b82f6;
+    box-shadow:none;
+}
+
+.btn{
+    border-radius:12px;
+    font-weight:bold;
+    padding:12px;
+}
+
+.answer-box{
+    background:rgba(255,255,255,.05);
+    border-left:5px solid #22c55e;
+    border-radius:15px;
+    padding:20px;
+    margin-top:30px;
+}
+
+</style>
+
+<h2 class="text-white mb-4">
+🤖 AI Career Assistant
+</h2>
+
+<div class="info-card">
+
+<h5>Ask Anything About Your Career</h5>
+
+<p class="text-light mb-0">
+Get AI guidance for resume improvement, interview preparation, placements, career planning and skill development.
+</p>
+
+</div>
+
+<div class="chat-card">
+
+<form method="POST">
+
+{% csrf_token %}
+
+<textarea
+name="message"
+class="form-control"
+rows="6"
+placeholder="Example: How can I improve my resume for a Python Developer role?"></textarea>
+
+<button
+type="submit"
+class="btn btn-success w-100 mt-4">
+
+🚀 Ask AI
+
+</button>
+
+</form>
+{% if answer %}
+
+<div class="answer-box">
+
+<h4 class="mb-3">
+💡 AI Response
+</h4>
+
+<hr>
+
+<pre style="background:none;border:none;color:white;white-space:pre-wrap;margin:0;">{{ answer }}</pre>
+
+</div>
+
+{% endif %}
+
+</div>
+
+{% endblock %}

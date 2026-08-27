@@ -1,0 +1,165 @@
+{% extends "base_recruiter.html" %}
+
+{% block title %}
+Recruiter Analytics
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.stat-card{
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:20px;
+    padding:25px;
+    color:white;
+    transition:.3s;
+    box-shadow:0 15px 40px rgba(0,0,0,.30);
+}
+
+.stat-card:hover{
+    transform:translateY(-8px);
+}
+
+.action-card{
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:20px;
+    padding:25px;
+    color:white;
+    box-shadow:0 15px 40px rgba(0,0,0,.30);
+}
+
+</style>
+
+<h2 class="text-white mb-4">
+📊 Recruiter Analytics
+</h2>
+
+<div class="row g-4">
+
+<div class="col-md-3">
+<div class="stat-card">
+<h5>Total Jobs</h5>
+<h2>{{total_jobs}}</h2>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="stat-card">
+<h5>Applications</h5>
+<h2>{{total_applications}}</h2>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="stat-card">
+<h5>Shortlisted</h5>
+<h2>{{shortlisted}}</h2>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="stat-card">
+<h5>Rejected</h5>
+<h2>{{rejected}}</h2>
+</div>
+</div>
+
+</div>
+
+<div class="action-card mt-5">
+
+<h3 class="mb-4">📈 Hiring Analytics</h3>
+
+<div style="height:350px;">
+<canvas id="analyticsChart"></canvas>
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const ctx = document.getElementById("analyticsChart");
+
+new Chart(ctx,{
+
+type:"bar",
+
+data:{
+
+labels:[
+"Jobs",
+"Applications",
+"Shortlisted",
+"Rejected",
+"Pending"
+],
+
+datasets:[{
+
+label:"Recruitment Statistics",
+
+data:[
+{{total_jobs}},
+{{total_applications}},
+{{shortlisted}},
+{{rejected}},
+{{pending}}
+],
+
+backgroundColor:[
+"#3b82f6",
+"#06b6d4",
+"#10b981",
+"#ef4444",
+"#f59e0b"
+],
+
+borderRadius:12
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+maintainAspectRatio:false,
+
+plugins:{
+legend:{
+labels:{
+color:"white"
+}
+}
+},
+
+scales:{
+
+x:{
+ticks:{color:"white"},
+grid:{color:"rgba(255,255,255,.15)"}
+},
+
+y:{
+beginAtZero:true,
+ticks:{color:"white"},
+grid:{color:"rgba(255,255,255,.15)"}
+}
+
+}
+
+}
+
+});
+
+</script>
+
+{% endblock %}

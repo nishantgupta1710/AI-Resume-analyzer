@@ -1,0 +1,630 @@
+{% extends 'base_candidate.html' %}
+
+{% block title %}
+Profile
+{% endblock %}
+
+{% block content %}
+
+<style>
+body{
+    font-family:'Segoe UI',sans-serif;
+}
+
+/* Main Card */
+
+.profile-card{
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:25px;
+    padding:40px;
+    color:white;
+    box-shadow:0 15px 40px rgba(0,0,0,.35);
+}
+
+/* Hero */
+
+.profile-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:25px;
+
+    margin-bottom:35px;
+
+}
+
+.profile-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.avatar{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#2563eb,#60a5fa);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:40px;
+
+    font-weight:bold;
+
+    color:white;
+
+    box-shadow:0 10px 25px rgba(37,99,235,.45);
+
+}
+
+.profile-name{
+
+    font-size:32px;
+
+    font-weight:bold;
+
+    margin-bottom:6px;
+
+}
+
+.profile-role{
+
+    color:#cbd5e1;
+
+    font-size:17px;
+
+}
+
+/* Completion Card */
+
+.completion-card{
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:18px;
+
+    padding:20px;
+
+    min-width:240px;
+
+}
+
+.progress{
+
+    height:10px;
+
+    border-radius:20px;
+
+    background:#334155;
+
+}
+
+.progress-bar{
+
+    background:linear-gradient(90deg,#22c55e,#16a34a);
+
+}
+
+/* Form */
+
+.form-label{
+
+    color:white;
+
+    font-weight:600;
+
+}
+
+.form-control{
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    color:white;
+
+    border-radius:12px;
+
+    padding:12px;
+
+}
+
+.form-control:focus{
+
+    background:rgba(255,255,255,.12);
+
+    color:white;
+
+    border-color:#3b82f6;
+
+    box-shadow:none;
+
+}
+
+.form-control::placeholder{
+
+    color:#cbd5e1;
+
+}
+
+/* Button */
+
+.save-btn{
+
+    width:100%;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    margin-top:10px;
+
+}
+.info-box{
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    border-radius:18px;
+
+    padding:25px;
+
+    margin-bottom:30px;
+
+}
+
+.info-title{
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    margin-bottom:20px;
+
+}
+
+.skill-preview{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:18px;
+
+}
+
+.skill-badge{
+
+    background:#2563eb;
+
+    color:white;
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+.dashboard-card{
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:20px;
+
+    padding:25px;
+
+    color:white;
+
+    text-align:center;
+
+    transition:.3s;
+
+    height:100%;
+
+}
+
+.dashboard-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.30);
+
+}
+
+.dashboard-card h2{
+
+    font-size:38px;
+
+    margin-bottom:12px;
+
+}
+
+.dashboard-card h5{
+
+    font-weight:bold;
+
+}
+
+.dashboard-card p{
+
+    color:#cbd5e1;
+
+    margin-bottom:0;
+
+}
+
+.action-btn{
+
+    width:100%;
+
+    margin-top:12px;
+
+    border-radius:12px;
+
+    font-weight:bold;
+
+}
+</style>
+
+<div class="profile-card">
+    <div class="profile-header">
+
+<div class="profile-left">
+
+<div class="avatar">
+
+{{request.user.username|first|upper}}
+
+</div>
+
+<div>
+
+<h2 class="profile-name">
+
+{{request.user.username}}
+
+</h2>
+
+<p class="profile-role">
+
+{{profile.role}}
+
+</p>
+
+<p class="mb-0 text-light">
+
+{{request.user.email}}
+
+</p>
+
+</div>
+
+</div>
+
+<div class="completion-card">
+
+<h5>
+
+📊 Profile Completion
+
+</h5>
+<div
+class="progress-bar"
+style="width:{{profile_completion}}%;">
+
+</div>
+
+<p class="mt-2 mb-1">
+
+{{profile_completion}}% Completed
+
+</p>
+
+<small class="text-light">
+
+{{completion_message}}
+
+</small>
+
+</div>
+
+
+</div>
+<div class="row mt-4 mb-5">
+
+<div class="col-lg-3 col-md-6 mb-4">
+
+<div class="dashboard-card">
+
+<h2>📄</h2>
+
+<h3>{{ resume_status }}</h3>
+
+<p>Resume Status</p>
+
+</div>
+
+</div>
+
+<div class="col-lg-3 col-md-6 mb-4">
+
+<div class="dashboard-card">
+
+<h2>🛠️</h2>
+
+<h3>{{ skills_count }}</h3>
+
+<p>Total Skills</p>
+
+</div>
+
+</div>
+
+<div class="col-lg-3 col-md-6 mb-4">
+
+<div class="dashboard-card">
+
+<h2>📊</h2>
+
+<h3>{{profile_completion}}%</h3>
+
+<p>Profile Complete</p>
+
+</div>
+
+</div>
+
+<div class="col-lg-3 col-md-6 mb-4">
+
+<div class="dashboard-card">
+
+<h2>👤</h2>
+
+<h3>{{ profile.role }}</h3>
+
+<p>Account Type</p>
+
+</div>
+
+</div>
+<div class="col-lg-4 mb-4">
+
+    <div class="dashboard-card">
+
+        <h2>📅</h2>
+
+        <h5>Member Since</h5>
+
+        <p>{{ joined_date|date:"d M Y" }}</p>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<h2 class="profile-title">
+👤 My Profile
+</h2>
+
+<p class="profile-subtitle">
+Update your personal information.
+</p>
+<div class="info-box">
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+<h3 class="info-title mb-0">
+👤 Personal Information
+</h3>
+
+<a href="{% url 'edit_profile' %}" class="btn btn-warning">
+
+✏️ Edit Profile
+
+</a>
+
+</div>
+
+<div class="row">
+
+<div class="col-md-6 mb-4">
+
+<label class="text-light fw-bold">
+📞 Phone Number
+</label>
+
+<div class="form-control">
+
+{{ profile.phone|default:"Not Added" }}
+
+</div>
+
+</div>
+
+<div class="col-md-6 mb-4">
+
+<label class="text-light fw-bold">
+🏫 College
+</label>
+
+<div class="form-control">
+
+{{ profile.college|default:"Not Added" }}
+
+</div>
+
+</div>
+
+<div class="col-md-6 mb-4">
+
+<label class="text-light fw-bold">
+📧 Email
+</label>
+
+<div class="form-control">
+
+{{ request.user.email }}
+
+</div>
+
+</div>
+
+<div class="col-md-6 mb-4">
+
+<label class="text-light fw-bold">
+👤 Account Type
+</label>
+
+<div class="form-control">
+
+{{ profile.role }}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="info-box">
+
+<h3 class="info-title">
+🛠️ Technical Skills
+</h3>
+
+<p class="text-light">
+
+Your registered technical skills.
+
+</p>
+
+<div class="skill-preview">
+
+{% for skill in skills_list %}
+
+<span class="skill-badge">
+
+{{ skill }}
+
+</span>
+
+{% empty %}
+
+<span class="text-light">
+
+No skills added yet.
+
+</span>
+
+{% endfor %}
+
+</div>
+
+</div>
+<hr class="my-5">
+
+<div class="row">
+
+<div class="col-lg-4 mb-4">
+
+<div class="dashboard-card">
+
+<h2>📄</h2>
+
+<h5>Resume</h5>
+
+<p>Upload & Manage Resume</p>
+
+<a href="{% url 'upload_resume' %}" class="btn btn-primary action-btn">
+
+Upload Resume
+
+</a>
+
+</div>
+
+</div>
+
+<div class="col-lg-4 mb-4">
+
+<div class="dashboard-card">
+
+<h2>🤖</h2>
+
+<h5>AI Resume</h5>
+
+<p>Analyze your resume using AI</p>
+
+<a href="{% url 'analyze_resume' %}" class="btn btn-success action-btn">
+
+Analyze Resume
+
+</a>
+
+</div>
+
+</div>
+
+<div class="col-lg-4 mb-4">
+
+<div class="dashboard-card">
+
+<h2>🎤</h2>
+
+<h5>Mock Interview</h5>
+
+<p>Practice AI Interview Questions</p>
+
+<a href="{% url 'mock_interview' %}" class="btn btn-warning action-btn">
+
+Start Interview
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

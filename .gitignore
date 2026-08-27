@@ -1,0 +1,10 @@
+myenv/
+venv/
+
+_pycache_/
+*.pyc
+
+.env
+media/
+
+*.log

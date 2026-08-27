@@ -1,0 +1,241 @@
+{% extends 'base_candidate.html' %}
+
+{% block title %}
+Upload Resume
+{% endblock %}
+
+{% block upload_active %}
+active
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.upload-card{
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:25px;
+    padding:35px;
+    color:white;
+    box-shadow:0 15px 40px rgba(0,0,0,.35);
+}
+
+.upload-box{
+    border:2px dashed #60a5fa;
+    border-radius:20px;
+    padding:55px;
+    text-align:center;
+    background:rgba(255,255,255,.05);
+    transition:.35s;
+}
+
+.upload-box:hover{
+    transform:translateY(-6px);
+    border-color:#3b82f6;
+    background:rgba(59,130,246,.08);
+}
+
+.upload-icon{
+    font-size:70px;
+    margin-bottom:15px;
+}
+
+.form-control{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.15);
+    color:white;
+}
+
+.form-control::file-selector-button{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:10px 20px;
+}
+
+.form-control:focus{
+    background:rgba(255,255,255,.08);
+    color:white;
+    border-color:#3b82f6;
+    box-shadow:none;
+}
+
+.info-card{
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:20px;
+    color:white;
+    padding:25px;
+    height:100%;
+}
+
+.resume-card{
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:20px;
+    color:white;
+    padding:25px;
+}
+
+.tip{
+    margin-bottom:18px;
+}
+
+.tip h6{
+    margin-bottom:5px;
+}
+
+</style>
+
+<div class="row">
+
+<div class="col-lg-8">
+
+<div class="upload-card">
+
+<h2 class="fw-bold mb-2">
+📄 Upload Resume
+</h2>
+
+<p class="text-light mb-4">
+Upload your latest resume and let AI analyze your skills, projects and experience.
+</p>
+
+<form method="POST" enctype="multipart/form-data">
+
+{% csrf_token %}
+
+<div class="upload-box">
+
+<div class="upload-icon">
+📄
+</div>
+
+<h3 class="fw-bold">
+Drag & Drop Resume
+</h3>
+
+<p class="text-light">
+PDF format recommended
+</p>
+
+<input
+type="file"
+name="resume_file"
+class="form-control mt-4"
+required
+>
+
+<button
+type="submit"
+class="btn btn-primary w-100 mt-4 py-3">
+
+🚀 Upload Resume
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<div class="col-lg-4">
+
+<div class="info-card">
+
+<h4 class="mb-4">
+✨ What happens next?
+</h4>
+
+<div class="tip">
+<h6>🤖 AI Resume Analysis</h6>
+<p class="text-light">
+AI checks your resume and extracts skills.
+</p>
+</div>
+
+<div class="tip">
+<h6>📊 Resume Score</h6>
+<p class="text-light">
+Get ATS score with improvement suggestions.
+</p>
+</div>
+
+<div class="tip">
+<h6>💼 Best Job Match</h6>
+<p class="text-light">
+Find jobs matching your resume.
+</p>
+</div>
+
+<div class="tip">
+<h6>🚀 Career Growth</h6>
+<p class="text-light">
+Receive personalized career recommendations.
+</p>
+</div>
+
+</div>
+
+</div>
+
+</div>
+{% if resume.resume_file %}
+
+<div class="resume-card mt-4">
+
+    <h4 class="mb-4">
+        📑 Current Resume
+    </h4>
+
+    <div class="d-grid gap-3">
+
+        <a
+            href="{{ resume.resume_file.url }}"
+            target="_blank"
+            class="btn btn-success btn-lg">
+
+            👀 View Current Resume
+
+        </a>
+
+        <a
+            href="{% url 'resume_loading' %}" class="btn btn-primary btn-lg">
+
+            🤖 Analyze Resume
+
+        </a>
+
+    </div>
+
+</div>
+
+{% else %}
+
+<div class="resume-card mt-4">
+
+    <h4 class="mb-3">
+        📌 Resume Tips
+    </h4>
+
+    <ul class="mb-0">
+        <li class="mb-2">✅ Keep your resume to 1 page.</li>
+        <li class="mb-2">✅ Mention technical skills clearly.</li>
+        <li class="mb-2">✅ Add projects with GitHub links.</li>
+        <li class="mb-2">✅ Include internships and certifications.</li>
+        <li>✅ Upload your resume in PDF format.</li>
+    </ul>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

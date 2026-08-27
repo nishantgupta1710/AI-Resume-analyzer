@@ -1,0 +1,137 @@
+{% extends "base_recruiter.html" %}
+
+{% block title %}
+Recruiter Dashboard
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.stat-card{
+    background:rgba(255,255,255,.1);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,.2);
+    color:white;
+    border-radius:20px;
+    padding:25px;
+    transition:.3s;
+}
+
+.stat-card:hover{
+    transform:translateY(-8px);
+}
+
+.action-card{
+    background:rgba(255,255,255,.1);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,.2);
+    color:white;
+    border-radius:20px;
+    padding:25px;
+}
+
+</style>
+
+<div class="container-fluid mt-4 px-4">
+
+    <h2 class="text-white mb-4">
+        Recruiter Dashboard
+    </h2>
+
+    <div class="action-card mb-4">
+
+        <h2>👋 Welcome, {{request.user.username}}</h2>
+
+        <p class="mt-3">
+            Manage your hiring process efficiently with AI tools.
+        </p>
+
+        <a href="/jobs/create/" class="btn btn-primary mt-2">
+            ➕ Post New Job
+        </a>
+
+    </div>
+
+    <div class="action-card mb-4">
+
+        <h3>📢 Hiring Overview</h3>
+
+        <p class="mt-3">
+            Welcome back! You can manage jobs, review applications,
+            generate AI interview questions and hire the best candidates.
+        </p>
+
+    </div>
+
+    <div class="action-card mt-4">
+
+        <h3>🕒 Recent Applications</h3>
+
+        <table class="table table-dark mt-3">
+
+            <thead>
+                <tr>
+                    <th>Candidate</th>
+                    <th>Job</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for app in recent_applications %}
+
+                <tr>
+                    <td>{{app.user.username}}</td>
+                    <td>{{app.job.title}}</td>
+                    <td>{{app.status}}</td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="action-card mt-4">
+
+        <h3>💼 Recently Posted Jobs</h3>
+
+        {% for job in recent_jobs %}
+
+        <hr>
+
+        <h5>{{job.title}}</h5>
+
+        <p>🏢 {{job.company_name}}</p>
+
+        <p>📍 {{job.location}}</p>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="action-card mt-4">
+
+        <h3>🤖 AI Hiring Tips</h3>
+
+        <ul>
+
+            <li>Write detailed job descriptions.</li>
+
+            <li>Add required technical skills.</li>
+
+            <li>Review applications every day.</li>
+
+            <li>Generate AI interview questions before interviews.</li>
+
+        </ul>
+
+    </div>
+
+</div>
+
+{% endblock %}

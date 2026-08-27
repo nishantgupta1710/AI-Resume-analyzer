@@ -1,0 +1,578 @@
+ {% extends 'base_recruiter.html' %}
+
+{% block title %}
+Recruiter Profile
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.profile-wrapper{
+    background:rgba(255,255,255,.07);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:25px;
+    padding:35px;
+    color:white;
+    box-shadow:0 20px 50px rgba(0,0,0,.30);
+}
+
+/* HERO */
+
+.profile-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:25px;
+    margin-bottom:35px;
+}
+
+.profile-left{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.avatar{
+    width:82px;
+    height:82px;
+    border-radius:50%;
+
+    background:linear-gradient(
+        135deg,
+        #06b6d4,
+        #2563eb
+    );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:34px;
+    font-weight:bold;
+    color:white;
+
+    box-shadow:0 10px 30px rgba(37,99,235,.35);
+}
+
+.profile-name{
+    font-size:30px;
+    font-weight:700;
+    margin:0 0 5px;
+}
+
+.profile-role{
+    color:#cbd5e1;
+    margin:0 0 4px;
+}
+
+.profile-email{
+    color:#94a3b8;
+    margin:0;
+}
+
+/* COMPLETION */
+
+.completion-card{
+    min-width:230px;
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:18px;
+    padding:18px;
+}
+
+.completion-card h6{
+    font-weight:700;
+}
+
+.progress{
+    height:9px;
+    background:rgba(255,255,255,.12);
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    background:linear-gradient(
+        90deg,
+        #22c55e,
+        #16a34a
+    );
+}
+
+/* STATS */
+
+.stat-card{
+    height:100%;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.13);
+
+    backdrop-filter:blur(18px);
+
+    border-radius:20px;
+
+    padding:25px 20px;
+
+    text-align:center;
+
+    transition:.3s;
+}
+
+.stat-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 15px 35px rgba(0,0,0,.25);
+}
+
+.stat-icon{
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+.stat-card h2{
+    font-size:28px;
+    font-weight:700;
+    margin-bottom:5px;
+}
+
+.stat-card p{
+    color:#cbd5e1;
+    margin:0;
+}
+
+/* SECTION */
+
+.section-title{
+    font-size:27px;
+    font-weight:700;
+    margin-bottom:5px;
+}
+
+.section-subtitle{
+    color:#cbd5e1;
+    margin-bottom:22px;
+}
+
+/* INFORMATION CARD */
+
+.info-card{
+
+    background:rgba(255,255,255,.07);
+
+    border:1px solid rgba(255,255,255,.13);
+
+    backdrop-filter:blur(18px);
+
+    border-radius:20px;
+
+    padding:25px;
+
+    margin-top:20px;
+}
+
+.info-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.info-header h4{
+    margin:0;
+    font-weight:700;
+}
+
+.info-item{
+    margin-bottom:20px;
+}
+
+.info-label{
+    color:#cbd5e1;
+    font-weight:600;
+    font-size:14px;
+    margin-bottom:8px;
+}
+
+.info-value{
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    border-radius:12px;
+
+    padding:12px 15px;
+
+    color:white;
+
+    min-height:48px;
+
+    display:flex;
+    align-items:center;
+}
+
+.edit-btn{
+    background:linear-gradient(
+        135deg,
+        #f59e0b,
+        #f97316
+    );
+
+    border:none;
+
+    color:white;
+
+    font-weight:700;
+
+    border-radius:10px;
+
+    padding:9px 18px;
+
+    text-decoration:none;
+
+    transition:.3s;
+}
+
+.edit-btn:hover{
+    transform:translateY(-2px);
+    color:white;
+    box-shadow:0 8px 20px rgba(249,115,22,.3);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+    .profile-wrapper{
+        padding:22px;
+    }
+
+    .profile-name{
+        font-size:24px;
+    }
+
+    .completion-card{
+        width:100%;
+    }
+
+}
+
+</style>
+
+
+<div class="profile-wrapper">
+
+    <!-- ================= HERO ================= -->
+
+    <div class="profile-header">
+
+        <div class="profile-left">
+
+            <div class="avatar">
+                {{ request.user.username|first|upper }}
+            </div>
+
+            <div>
+
+                <h2 class="profile-name">
+                    {{ request.user.username }}
+                </h2>
+
+                <p class="profile-role">
+                    🏢 {{ profile.role|default:"Recruiter" }}
+                </p>
+
+                <p class="profile-email">
+                    {{ request.user.email }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROFILE COMPLETION -->
+
+        <div class="completion-card">
+
+            <h6>
+                📊 Profile Completion
+            </h6>
+
+            <div class="progress mt-3">
+
+                <div
+                    class="progress-bar"
+                    style="width:{{ profile_completion }}%;">
+                </div>
+
+            </div>
+
+            <p class="mt-2 mb-1">
+                <strong>
+                    {{ profile_completion }}%
+                </strong>
+                Completed
+            </p>
+
+            <small class="text-light">
+                {{ completion_message }}
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= STAT CARDS ================= -->
+
+    <div class="row g-4 mb-5">
+
+        <!-- JOBS -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    💼
+                </div>
+
+                <h2>
+                    {{ jobs_count|default:"0" }}
+                </h2>
+
+                <p>
+                    Total Jobs Posted
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- APPLICATIONS -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    👥
+                </div>
+
+                <h2>
+                    {{ applications_count|default:"0" }}
+                </h2>
+
+                <p>
+                    Total Applications
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ACTIVE JOBS -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🟢
+                </div>
+
+                <h2>
+                    {{ active_jobs|default:"0" }}
+                </h2>
+
+                <p>
+                    Active Jobs
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- MEMBER SINCE -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📅
+                </div>
+
+                <h2 style="font-size:20px; margin-top:8px;">
+                    {{ joined_date|date:"d M Y" }}
+                </h2>
+
+                <p>
+                    Member Since
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= PROFILE ================= -->
+
+    <div class="section-title">
+        👤 My Profile
+    </div>
+
+    <p class="section-subtitle">
+        Manage your company and recruiter information.
+    </p>
+
+
+    <div class="info-card">
+
+        <div class="info-header">
+
+            <h4>
+                🏢 Company Information
+            </h4>
+            <a href="{% url 'edit_recruiter_profile' %}" class="edit-btn">
+✏️ Edit Profile
+</a>
+    
+
+        </div>
+
+
+
+        <div class="row">
+
+            <!-- COMPANY NAME -->
+
+            <div class="col-md-6">
+
+                <div class="info-item">
+
+                    <div class="info-label">
+                        🏢 Company Name
+                    </div>
+
+                    <div class="info-value">
+                        {{ profile.company_name|default:"Not Added" }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- HR NAME -->
+
+            <div class="col-md-6">
+
+                <div class="info-item">
+
+                    <div class="info-label">
+                        👤 HR Name
+                    </div>
+
+                    <div class="info-value">
+                        {{ profile.hr_name|default:"Not Added" }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="col-md-6">
+
+                <div class="info-item">
+
+                    <div class="info-label">
+                        📧 Company Email
+                    </div>
+
+                    <div class="info-value">
+                        {{ profile.company_email|default:"Not Added" }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PHONE -->
+
+            <div class="col-md-6">
+
+                <div class="info-item">
+
+                    <div class="info-label">
+                        📞 Phone Number
+                    </div>
+
+                    <div class="info-value">
+                        {{ profile.phone|default:"Not Added" }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- WEBSITE -->
+
+            <div class="col-md-6">
+
+                <div class="info-item">
+
+                    <div class="info-label">
+                        🌐 Website
+                    </div>
+
+                    <div class="info-value">
+                        {{ profile.website|default:"Not Added" }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- LOCATION -->
+
+            <div class="col-md-6">
+
+                <div class="info-item">
+
+                    <div class="info-label">
+                        📍 Location
+                    </div>
+
+                    <div class="info-value">
+                        {{ profile.location|default:"Not Added" }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+{% endblock %}

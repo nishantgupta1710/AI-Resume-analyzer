@@ -1,0 +1,237 @@
+{% extends 'base_candidate.html' %}
+
+{% block title %}
+Edit Profile
+{% endblock %}
+
+{% block content %}
+<style>
+    
+.profile-card{
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:25px;
+    padding:40px;
+    color:white;
+    box-shadow:0 15px 40px rgba(0,0,0,.35);
+}
+
+/* Hero */
+
+.profile-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:25px;
+
+    margin-bottom:35px;
+
+}
+
+.profile-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.avatar{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#2563eb,#60a5fa);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:40px;
+
+    font-weight:bold;
+
+    color:white;
+
+    box-shadow:0 10px 25px rgba(37,99,235,.45);
+
+}
+.form-label{
+
+    color:white;
+
+    font-weight:600;
+
+}
+
+.form-control{
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    color:white;
+
+    border-radius:12px;
+
+    padding:12px;
+
+}
+
+.form-control:focus{
+
+    background:rgba(255,255,255,.12);
+
+    color:white;
+
+    border-color:#3b82f6;
+
+    box-shadow:none;
+
+}
+
+
+</style>
+
+<div class="profile-card">
+    <div class="profile-header">
+
+<div class="profile-left">
+
+<div class="avatar">
+
+{{ request.user.username|first|upper }}
+
+</div>
+
+<div>
+
+<h2 class="profile-name">
+
+{{ request.user.username }}
+
+</h2>
+
+<p class="profile-role">
+
+{{ profile.role }}
+
+</p>
+
+<p class="text-light mb-0">
+
+{{ request.user.email }}
+
+</p>
+
+</div>
+
+</div>
+
+<div>
+
+<a href="{% url 'profile' %}" class="btn btn-primary">
+
+👤 View Profile
+
+</a>
+
+</div>
+
+</div>
+
+<hr class="mb-4">
+
+<h2 class="profile-title">
+✏️ Edit Profile
+</h2>
+
+<p class="profile-subtitle">
+Update your profile information.
+</p>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<div class="row">
+
+<div class="col-md-6 mb-4">
+
+<label class="form-label">
+📞 Phone Number
+</label>
+
+<input
+type="text"
+name="phone"
+value="{{ profile.phone }}"
+class="form-control">
+
+</div>
+
+<div class="col-md-6 mb-4">
+
+<label class="form-label">
+🏫 College Name
+</label>
+
+<input
+type="text"
+name="college"
+value="{{ profile.college }}"
+class="form-control">
+
+</div>
+
+</div>
+
+<div class="mb-4">
+
+<label class="form-label">
+🛠️ Technical Skills
+</label>
+
+<textarea
+name="skills"
+rows="6"
+class="form-control">{{ profile.skills }}</textarea>
+
+</div>
+<div class="d-grid mt-4">
+<button
+type="submit"
+class="btn btn-success save-btn">
+
+💾 Save Changes
+
+</button>
+</div>
+
+<a
+href="{% url 'profile' %}"
+class="btn btn-secondary save-btn mt-2">
+
+⬅️ Back To Profile
+
+</a>
+
+</form>
+
+</div>
+
+{% endblock %}

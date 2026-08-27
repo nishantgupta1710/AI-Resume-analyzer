@@ -1,0 +1,150 @@
+{% extends 'base_candidate.html' %}
+
+{% block title %}
+Analyzing Resume
+{% endblock %}
+
+{% block content %}
+<style>
+
+.loading-card{
+
+    max-width:700px;
+
+    margin:auto;
+
+    padding:50px;
+
+    border-radius:25px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    text-align:center;
+
+    color:white;
+
+}
+
+.ai-icon{
+
+    font-size:70px;
+
+    margin-bottom:20px;
+
+}
+
+.progress{
+
+    height:18px;
+
+    background:#23354d;
+
+    border-radius:30px;
+
+}
+
+.progress-bar{
+
+    background:linear-gradient(90deg,#00c6ff,#0072ff);
+
+    transition:.3s;
+
+}
+
+#status{
+
+    color:#cbd5e1;
+
+    font-size:18px;
+
+}
+
+</style>
+
+<div class="container py-5">
+
+    <div class="loading-card">
+
+        <div class="ai-icon">
+            🤖
+        </div>
+
+        <h2>
+            AI Resume Analysis
+        </h2>
+
+        <p id="status">
+            Initializing AI...
+        </p>
+
+        <div class="progress mt-4">
+
+            <div
+                id="progressBar"
+                class="progress-bar"
+                style="width:0%">
+            </div>
+
+        </div>
+
+        <h3 class="mt-3">
+            <span id="percent">0</span>%
+        </h3>
+
+    </div>
+
+</div>
+<script>
+
+let progress = 0;
+
+const progressBar = document.getElementById("progressBar");
+const percent = document.getElementById("percent");
+const status = document.getElementById("status");
+
+const messages = {
+
+    10:"📄 Reading Resume...",
+    25:"🧠 Extracting Skills...",
+    45:"💼 Detecting Experience...",
+    65:"🎯 Matching Job Roles...",
+    85:"📊 Calculating ATS Score...",
+    100:"✅ Analysis Completed"
+
+};
+
+const timer = setInterval(function(){
+
+    progress++;
+
+    progressBar.style.width = progress + "%";
+
+    percent.innerHTML = progress;
+
+    if(messages[progress]){
+
+        status.innerHTML = messages[progress];
+
+    }
+
+    if(progress >= 100){
+
+        clearInterval(timer);
+
+        setTimeout(function(){
+
+            window.location.href = "{% url 'analyze_resume' %}";
+
+        },1000);
+
+    }
+
+},80);
+
+</script>
+
+{% endblock %}
