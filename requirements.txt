@@ -20,7 +20,6 @@ httplib2==0.31.2
 idna==3.18
 mysqlclient==2.2.8
 proto-plus==1.28.0
-protobuf==5.29.5
 pyasn1==0.6.3
 pyasn1_modules==0.4.2
 pycparser==3.0
